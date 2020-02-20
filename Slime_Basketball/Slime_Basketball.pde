@@ -20,7 +20,7 @@ color yellow = color(242, 215, 16);
 
 int lscore,rscore,timer;
 
-FBox lground, rground, lwall, rwall, net,ceiling,lbackboard,rbackboard;
+FBox lground, rground, lwall, rwall, net,ceiling,lbackboard,rbackboard,lrim,rrim;
 
 PImage sunset,eightball,water;
 
@@ -84,7 +84,7 @@ void setup() {
   lplayer.setRotatable(false);
   lplayer.setPosition(200, 400);
 
-  lplayer.attachImage(eightball);
+  lplayer.setFill(0);
 
   world.add(lplayer);
 
@@ -93,9 +93,7 @@ void setup() {
   rplayer.setNoStroke();
   rplayer.setRotatable(false);
   rplayer.setPosition(600, 400);
-
-  rplayer.attachImage(eightball);
-
+  rplayer.setFill(255);
   world.add(rplayer);
 
   lwall= new FBox(50, 1200);
@@ -124,11 +122,11 @@ void setup() {
 
   net.setFill(0);
 
-  net.setPosition(400,550);
+  net.setPosition(400,625);
 
   world.add(net);
 
-  ball=new FCircle(20);
+  ball=new FCircle(30);
 
   ball.setFillColor(blue);
 
@@ -160,6 +158,20 @@ rbackboard.setStatic(true);
 rbackboard.setPosition(760,300);
 rbackboard.setNoStroke();
 world.add(rbackboard);
+
+lrim=new FBox(10,4);
+lrim.setFillColor(#DE7F02);
+lrim.setStatic(true);
+lrim.setNoStroke();
+lrim.setPosition(115,323);
+world.add(lrim);
+
+rrim=new FBox(10,4);
+rrim.setFillColor(#DE7F02);
+rrim.setStatic(true);
+rrim.setNoStroke();
+rrim.setPosition(686,323);
+world.add(rrim);
 }
 
 
@@ -173,6 +185,7 @@ void draw() {
   background(sunset);
   fill(#DE7F02);
  rect(40,320,80,5);
+  rect(680,320,80,5);
   fill(255);
 
   textSize(50);
@@ -195,7 +208,7 @@ void draw() {
 
     FContact c=contacts.get(i);
 
-    if (c.contains(lground)) leftCanJump=true;
+    if (c.contains(lground)||c.contains(rground)) leftCanJump=true;
 
     i++;
 
@@ -211,7 +224,7 @@ void draw() {
 
     FContact c=contacts2.get(j);
 
-    if (c.contains(rground)) rightCanJump=true;
+    if (c.contains(rground)||c.contains(lground)) rightCanJump=true;
 
     j++;
 
@@ -227,13 +240,13 @@ void draw() {
 
    if(c.contains(rground)){
 
-     lscore++;
+     //lscore++;
 
      
 
-    ball.setVelocity(0,0);
+   // ball.setVelocity(0,0);
 
-    timer=60;
+   // timer=60;
     if(timer>=0){
      lplayer.setPosition(200,400);
      lplayer.setVelocity(0,0);
@@ -244,9 +257,9 @@ void draw() {
    }
 
    if(c.contains(lground)){
-     rscore++;
-     ball.setVelocity(0,0);
-     timer=60;
+    // rscore++;
+   //  ball.setVelocity(0,0);
+   //  timer=60;
  if(timer>=0){
      lplayer.setPosition(200,400);
      lplayer.setVelocity(0,0);
@@ -259,9 +272,9 @@ void draw() {
     k++;
 
   }
-  if(lplayer.getX()>=375) lplayer.setPosition(375,lplayer.getY());
+ // if(lplayer.getX()>=375) lplayer.setPosition(375,lplayer.getY());
   
- if(rplayer.getX()<=425) rplayer.setPosition(425,rplayer.getY());
+ //if(rplayer.getX()<=425) rplayer.setPosition(425,rplayer.getY());
  
   if (wkey&&leftCanJump) lplayer.addImpulse(0, -2000);
 
