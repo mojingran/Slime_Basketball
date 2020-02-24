@@ -2,6 +2,8 @@ import fisica.*;
 
 FWorld world;
 
+final int intro=1,game=2,gameover=3;
+int mode=1;
 boolean leftCanJump, rightCanJump;
 
 boolean wkey, akey, dkey,upkey,leftkey,rightkey;
@@ -20,7 +22,7 @@ color yellow = color(242, 215, 16);
 
 int lscore,rscore,timer;
 
-FBox lground, rground, lwall, rwall, net,ceiling,lbackboard,rbackboard,lrim,rrim;
+FBox lground, rground, lwall, rwall,ceiling,lbackboard,rbackboard,lrim,rrim;
 
 PImage sunset,eightball,water;
 
@@ -56,7 +58,7 @@ void setup() {
 
   lground.setStatic(true);
 
-  lground.attachImage(water);
+  
 
   world.add(lground);
 
@@ -70,7 +72,7 @@ void setup() {
 
   rground.setStatic(true);
 
-  rground.attachImage(water);
+  
 
   world.add(rground);
 
@@ -116,15 +118,7 @@ void setup() {
 
   world.add(rwall);
 
-  net= new FBox(25,200);
-
-  net.setStatic(true);
-
-  net.setFill(0);
-
-  net.setPosition(400,625);
-
-  world.add(net);
+  
 
   ball=new FCircle(30);
 
@@ -177,154 +171,16 @@ world.add(rrim);
 
 
 void draw() {
-  
- timer--;
-
- if(timer<0){
-
-  background(sunset);
-  fill(#DE7F02);
- rect(40,320,80,5);
-  rect(680,320,80,5);
-  fill(255);
-
-  textSize(50);
-
-  
-
-  leftCanJump=false;
-
-  rightCanJump=false;
-
-  lplayer.getContacts();
-
-  ArrayList<FContact> contacts=lplayer.getContacts();
-
-
-
-  int i=0;
-
-  while (i<contacts.size()) {
-
-    FContact c=contacts.get(i);
-
-    if (c.contains(lground)||c.contains(rground)) leftCanJump=true;
-
-    i++;
-
+  if(mode==1){
+  intro();
+  }else if(mode==2){
+   game();
+  }else if(mode==3){
+   gameover(); 
   }
-
-  ArrayList<FContact> contacts2=rplayer.getContacts();
-
-
-
- int j=0;
-
-  while (j<contacts2.size()) {
-
-    FContact c=contacts2.get(j);
-
-    if (c.contains(rground)||c.contains(lground)) rightCanJump=true;
-
-    j++;
-
+  else{
+   error(); 
   }
-
-  ArrayList<FContact> contacts3=ball.getContacts();
-
-  int k=0;
-
-  while(k<contacts3.size()){
-
-   FContact c=contacts3.get(k);
-
-   if(c.contains(rground)){
-
-     //lscore++;
-
-     
-
-   // ball.setVelocity(0,0);
-
-   // timer=60;
-    if(timer>=0){
-     lplayer.setPosition(200,400);
-     lplayer.setVelocity(0,0);
-     rplayer.setPosition(600,400);
-     rplayer.setVelocity(0,0);
-     ball.setPosition(lplayer.getX(),200);
-    }
-   }
-
-   if(c.contains(lground)){
-    // rscore++;
-   //  ball.setVelocity(0,0);
-   //  timer=60;
- if(timer>=0){
-     lplayer.setPosition(200,400);
-     lplayer.setVelocity(0,0);
-     rplayer.setPosition(600,400);
-     rplayer.setVelocity(0,0);
-     ball.setPosition(rplayer.getX(),200);
-    }
-   }
-
-    k++;
-
-  }
- // if(lplayer.getX()>=375) lplayer.setPosition(375,lplayer.getY());
-  
- //if(rplayer.getX()<=425) rplayer.setPosition(425,rplayer.getY());
- 
-  if (wkey&&leftCanJump) lplayer.addImpulse(0, -2000);
-
-  if (upkey&&rightCanJump) rplayer.addImpulse(0, -2000);
-
-  if (akey) lplayer.addImpulse(-300, 0);
-
-  if (dkey) lplayer.addImpulse(300, 0);
-
- if(leftkey) rplayer.addImpulse(-300,0);
-
- if(rightkey) rplayer.addImpulse(300,0);
-
-  world.step();
-
-  world.draw();
-
- }
-
- text("LEFT:"+lscore,100,100);
-
-  text("RIGHT:"+rscore,500,100);
-
-if(lscore==3){
-
- text("LEFT WINS",250,300);
-
- timer=100;
-
- timer++;
-
- text("Click anywhere to restart",250,500);
-
- if(mousePressed){lscore=0;rscore=0;timer=60;}
-
-}
-
-if(rscore==3){
-
- text("RIGHT WINS",250,300);
-
- text("click anywhere to restart",250,500);
-
- if(mousePressed){lscore=0;rscore=0;timer=60;}
-
- timer=100;
-
- timer++;
-
-}
 
 
 }
