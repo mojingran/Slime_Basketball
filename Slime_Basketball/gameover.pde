@@ -3,3 +3,7 @@ void gameover(){
   
   
 }
+
+void gameOverClicks(){
+  
+}

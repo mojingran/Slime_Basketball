@@ -1,4 +1,4 @@
-void game() {
+void AI(){
   timer--;
 
   if (timer<0) {
@@ -122,9 +122,9 @@ void game() {
 
     if (rightkey) rplayer.addImpulse(300, 0);
 
-    world.step();
+    worldAI.step();
 
-    world.draw();
+    worldAI.draw();
   }
 
   text("LEFT:"+lscore, 100, 100);
@@ -165,5 +165,6 @@ void game() {
   }
 }
 
-void gameClicks() {
+void AIClicks(){
+  
 }
