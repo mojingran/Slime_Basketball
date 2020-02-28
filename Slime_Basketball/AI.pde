@@ -1,6 +1,7 @@
 void AI(){
   timer--;
-
+  
+  
   if (timer<0) {
 
     background(sunset);
@@ -16,7 +17,7 @@ void AI(){
     leftCanJump=false;
 
     rightCanJump=false;
-
+    AICanJump=false;
     lplayer.getContacts();
 
     ArrayList<FContact> contacts=lplayer.getContacts();
@@ -35,7 +36,7 @@ void AI(){
     }
 
     //scoring
-    if (ball.getX()>40&&ball.getX()<110&&ball.getY()>=320&&ball.getY()<330&&ball.getVelocityY()>0) {
+   if (ball.getX()>40&&ball.getX()<110&&ball.getY()>=320&&ball.getY()<330&&ball.getVelocityY()>0) {
       rscore++; 
       timer=60;
       lplayer.setPosition(200, 400);
@@ -58,7 +59,7 @@ void AI(){
       ball.setPosition(lplayer.getX(), 200);
       ball.setVelocity(0, 0);
       ball.setAngularVelocity(0);
-      rplayer.setAngularVelocity(0);
+    //  rplayer.setAngularVelocity(0);
       lplayer.setAngularVelocity(0);
     }
     ArrayList<FContact> contacts2=rplayer.getContacts();
@@ -85,8 +86,8 @@ void AI(){
         if (timer>=0) {
           lplayer.setPosition(200, 400);
           lplayer.setVelocity(0, 0);
-          rplayer.setPosition(600, 400);
-          rplayer.setVelocity(0, 0);
+        //  rplayer.setPosition(600, 400);
+         // rplayer.setVelocity(0, 0);
           ball.setPosition(lplayer.getX(), 200);
         }
       }
@@ -98,13 +99,22 @@ void AI(){
         if (timer>=0) {
           lplayer.setPosition(200, 400);
           lplayer.setVelocity(0, 0);
-          rplayer.setPosition(600, 400);
-          rplayer.setVelocity(0, 0);
-          ball.setPosition(rplayer.getX(), 200);
+       //   rplayer.setPosition(600, 400);
+       //   rplayer.setVelocity(0, 0);
+        //  ball.setPosition(rplayer.getX(), 200);
         }
       }
 
       k++;
+    }
+    ArrayList<FContact> contacts4=AIplayer.getContacts();
+    int m=0;
+    while(m<contacts4.size()){
+     FContact c=contacts4.get(m);
+     if (c.contains(rground)||c.contains(lground)) AICanJump=true;
+
+      m++;
+     
     }
     // if(lplayer.getX()>=375) lplayer.setPosition(375,lplayer.getY());
 
@@ -118,13 +128,23 @@ void AI(){
 
     if (dkey) lplayer.addImpulse(300, 0);
 
-    if (leftkey) rplayer.addImpulse(-300, 0);
+   // if (leftkey) rplayer.addImpulse(-300, 0);
 
-    if (rightkey) rplayer.addImpulse(300, 0);
+//    if (rightkey) rplayer.addImpulse(300, 0);
 
     worldAI.step();
 
     worldAI.draw();
+    textAlign(CENTER);
+    textSize(30);
+    fill(#FC0505);
+    text("CPU",AIplayer.getX(),AIplayer.getY());
+    textAlign(CORNER);
+    fill(255);
+    textSize(50);
+    if(ball.getX()>200){
+     CPUact(); 
+    }
   }
 
   text("LEFT:"+lscore, 100, 100);
@@ -167,4 +187,11 @@ void AI(){
 
 void AIClicks(){
   
+}
+
+void CPUact(){
+  AIplayer.addImpulse(floor(ball.getX()-AIplayer.getX()),0);
+  if(abs(ball.getY()-AIplayer.getY())<130&&abs(ball.getX()-AIplayer.getX())<70&&AICanJump==true){
+    AIplayer.addImpulse(0,-4000);
+  }
 }

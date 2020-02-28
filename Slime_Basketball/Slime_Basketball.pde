@@ -4,11 +4,11 @@ FWorld world,worldAI;
 
 final int intro=1,game=2,gameover=3,AI=4;
 int mode=1;
-boolean leftCanJump, rightCanJump;
+boolean leftCanJump, rightCanJump,AICanJump;
 
 boolean wkey, akey, dkey,upkey,leftkey,rightkey;
 
-FCircle lplayer, rplayer, ball;
+FCircle lplayer, rplayer, ball, AIplayer;
 
 color blue   = color(29, 178, 242);
 
@@ -78,7 +78,15 @@ void setup() {
 worldAI.add(rground);
 
 
+ AIplayer=new FCircle(70);
+ AIplayer.setDensity(2);
+ AIplayer.setNoStroke();
+ AIplayer.setRotatable(false);
+ AIplayer.setPosition(600, 400);
+ AIplayer.setRotatable(false);
+ AIplayer.setFill(255);
 
+ worldAI.add(AIplayer);
 
   lplayer= new FCircle(70);
 
