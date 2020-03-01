@@ -40,29 +40,29 @@ void AI(){
       rscore++; 
       timer=60;
       lplayer.setPosition(200, 400);
-      rplayer.setPosition(600, 400);
-      ball.setPosition(rplayer.getX(), 200);
+      AIplayer.setPosition(600, 400);
+      ball.setPosition(random(530,590), 200);
       ball.setVelocity(0, 0);
       ball.setAngularVelocity(0);
-      rplayer.setAngularVelocity(0);
+      AIplayer.setAngularVelocity(0);
       lplayer.setAngularVelocity(0);
       lplayer.setVelocity(0, 0);
-      rplayer.setVelocity(0, 0);
+      AIplayer.setVelocity(0, 0);
     }
     if (ball.getX()>690&&ball.getX()<760&&ball.getY()>=320&&ball.getY()<330&&ball.getVelocityY()>0) {
       lscore++; 
       timer=60;
       lplayer.setPosition(200, 400);
-      rplayer.setPosition(600, 400);
+      AIplayer.setPosition(600, 400);
       lplayer.setVelocity(0, 0);
-      rplayer.setVelocity(0, 0);
+      AIplayer.setVelocity(0, 0);
       ball.setPosition(lplayer.getX(), 200);
       ball.setVelocity(0, 0);
       ball.setAngularVelocity(0);
-    //  rplayer.setAngularVelocity(0);
+    //  AIplayer.setAngularVelocity(0);
       lplayer.setAngularVelocity(0);
     }
-    ArrayList<FContact> contacts2=rplayer.getContacts();
+    ArrayList<FContact> contacts2=AIplayer.getContacts();
     int j=0;
 
     while (j<contacts2.size()) {
@@ -86,8 +86,8 @@ void AI(){
         if (timer>=0) {
           lplayer.setPosition(200, 400);
           lplayer.setVelocity(0, 0);
-        //  rplayer.setPosition(600, 400);
-         // rplayer.setVelocity(0, 0);
+        //  AIplayer.setPosition(600, 400);
+         // AIplayer.setVelocity(0, 0);
           ball.setPosition(lplayer.getX(), 200);
         }
       }
@@ -99,9 +99,9 @@ void AI(){
         if (timer>=0) {
           lplayer.setPosition(200, 400);
           lplayer.setVelocity(0, 0);
-       //   rplayer.setPosition(600, 400);
-       //   rplayer.setVelocity(0, 0);
-        //  ball.setPosition(rplayer.getX(), 200);
+       //   AIplayer.setPosition(600, 400);
+       //   AIplayer.setVelocity(0, 0);
+        //  ball.setPosition(AIplayer.getX(), 200);
         }
       }
 
@@ -118,19 +118,19 @@ void AI(){
     }
     // if(lplayer.getX()>=375) lplayer.setPosition(375,lplayer.getY());
 
-    //if(rplayer.getX()<=425) rplayer.setPosition(425,rplayer.getY());
+    //if(AIplayer.getX()<=425) AIplayer.setPosition(425,AIplayer.getY());
 
     if (wkey&&leftCanJump) lplayer.addImpulse(0, -2500);
 
-    if (upkey&&rightCanJump) rplayer.addImpulse(0, -2500);
+    if (upkey&&rightCanJump) AIplayer.addImpulse(0, -2500);
 
     if (akey) lplayer.addImpulse(-300, 0);
 
     if (dkey) lplayer.addImpulse(300, 0);
 
-   // if (leftkey) rplayer.addImpulse(-300, 0);
+   // if (leftkey) AIplayer.addImpulse(-300, 0);
 
-//    if (rightkey) rplayer.addImpulse(300, 0);
+//    if (rightkey) AIplayer.addImpulse(300, 0);
 
     worldAI.step();
 
@@ -161,24 +161,28 @@ void AI(){
 
     text("Click anywhere to restart", 250, 500);
 
-    if (mousePressed) {
+    /*if (mousePressed) {
       lscore=0;
       rscore=0;
       timer=60;
-    }
+    }*/
   }
 
   if (rscore==3) {
-
-    text("RIGHT WINS", 250, 300);
-
-    text("click anywhere to restart", 250, 500);
-
-    if (mousePressed) {
+    textAlign(CENTER);
+     text("AI WINS", width/2, 300);
+    rectMode(CENTER);
+    fill(red);
+    rect(250,480,300,100);
+    fill(255);
+    text("RESTART", 250, 500);
+  textAlign(CORNER);
+    rectMode(CORNER);
+  /*  if (mousePressed) {
       lscore=0;
       rscore=0;
       timer=60;
-    }
+    }*/
 
     timer=100;
     timer++;
@@ -191,7 +195,7 @@ void AIClicks(){
 
 void CPUact(){
   AIplayer.addImpulse(floor(ball.getX()-AIplayer.getX()),0);
-  if(abs(ball.getY()-AIplayer.getY())<130&&abs(ball.getX()-AIplayer.getX())<70&&AICanJump==true){
+  if(AIplayer.getY()-ball.getY()<130&&AIplayer.getY()-ball.getY()>40&&abs(ball.getX()-AIplayer.getX())<70&&AICanJump==true){
     AIplayer.addImpulse(0,-4000);
   }
 }
