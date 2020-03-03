@@ -47,7 +47,7 @@ void setup() {
   skillfulball=loadImage("Skillful_Ball.png");
   sb2=loadImage("Skillful_Ball.png");
   sb3=loadImage("Skillful_Ball.png");
-  sunset.resize(800, 600);
+  //sunset.resize(800, 600);
   angryball.resize(300, 300);
   skillfulball.resize(300, 300);
   sb2.resize(350, 350);
